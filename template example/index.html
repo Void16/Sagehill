@@ -1,0 +1,50 @@
+    {% extends 'base.html' %}
+    {%block content %}
+    {% if user.is_authenticated %}
+    <h1>Note-taking App</h1>
+    <form id="note-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <!-- <input type="hidden" id="note-id" value="">
+      <label for="note-title">Title:</label><br>
+      <input type="text" id="note-title" name="note-title" value=""><br>
+      <label for="note-text">Notes:</label><br>
+      <textarea id="note-text" name="note-text" rows="4" cols="50"></textarea><br>
+      <input type="submit" value="Save Note"> -->
+    </form>
+    {% for note in notes %}
+    <h2>Saved Notes</h2>
+    <div id="saved-notes">
+      {{ note.title }}
+      {{ note.content }}
+      
+    </div>
+    <button type="submit">Save</button>
+    {% empty %}
+      No notes yet.
+    {% endfor %}
+    {% else %}
+    <div class="col-md-6 offset-md-3">
+      <h1>Login</h1>
+      <br/>
+      
+      <form method="POST" action="{% url 'notes_view' %}">
+        {% csrf_token %}
+      
+        <div class="mb-3">
+          <input type="text" class="form-control" name="username", placeholder="Username" required>
+          
+        </div><br/>
+        <div class="mb-3">
+          <input type="password" class="form-control" name="password", placeholder="Password" required>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-secondary">Login</button>
+      
+      </form>
+      
+      {% endif %}
+      
+    
+    {% endblock content %}
+  
